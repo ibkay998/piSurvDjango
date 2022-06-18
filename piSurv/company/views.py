@@ -14,14 +14,15 @@ from rest_framework import viewsets
 
  
 class SurveyList(viewsets.ModelViewSet):
-    queryset = Survey.objects.all()
+    user = User.objects.get(username = "test1")
+    queryset = Survey.objects.filter(user=user)
     serializer_class = SurveySerializer
 
 
 class SurveyLists(APIView):
     def get(self,request):
-        question = Question.objects.all()
-        survey = Survey.objects.all()
+        user = User.objects.get(username = "second")
+        survey = Survey.objects.filter(user=user)
         serializer = SurveySerializer(survey,many=True)
         
         return Response(serializer.data)

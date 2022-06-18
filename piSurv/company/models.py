@@ -5,6 +5,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.forms import CharField
 from user.models import ProfileUser
+from django.utils import timezone
 import jsonfield
 
 
@@ -41,13 +42,13 @@ class Survey(models.Model):
 class Question(models.Model):
     survey = models.ForeignKey(Survey,on_delete=models.CASCADE)
     name_of_question = models.CharField(max_length=200)
-    pub_date = models.DateField('date published')
+    pub_date = models.DateField('date published',default=timezone.now)
 
     def __str__(self):
         return self.name_of_question
 
 class Choice(models.Model):
-    question = models.ForeignKey(Question,null=True,on_delete=models.CASCADE)
+    question = models.ForeignKey(Question,null=True,on_delete=models.CASCADE,)
     text = models.CharField(max_length=200)
 
     def __str__(self):

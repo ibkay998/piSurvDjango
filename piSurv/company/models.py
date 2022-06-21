@@ -66,14 +66,6 @@ class Wallet(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     amount = models.IntegerField(default = 0)
 
-@receiver(post_save, sender=User)
-def create_wallet(sender, instance, created, **kwargs):
-    if created:
-        Wallet.objects.create(user=instance)
-
-@receiver(post_save, sender=User)
-def save_user_wallet(sender, instance, **kwargs):
-    instance.wallet.save()
 
 
 # Create your models here.

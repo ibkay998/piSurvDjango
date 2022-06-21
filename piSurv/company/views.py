@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.contrib.auth.models import User,auth
-from .serializers import ProfileSerializers,QuestionsSerializer,TestModelSerializer,SurveySerializer
+from .serializers import ProfileSerializers,QuestionsSerializer,TestModelSerializer,SurveySerializer,UserSerializer
 from .models import Profile,Question,TestModel,Survey
+from rest_framework.permissions import IsAuthenticated,IsAuthenticatedOrReadOnly,IsAdminUser
 from django.http import JsonResponse,HttpResponse
 from rest_framework import status
 from rest_framework.decorators import APIView,api_view
@@ -9,24 +10,29 @@ from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework import mixins
 from rest_framework import viewsets
+from rest_framework.authentication import TokenAuthentication
 
 
 
  
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
 class SurveyList(viewsets.ModelViewSet):
-    user = User.objects.get(username = "test1")
-    queryset = Survey.objects.filter(user=user)
+    queryset = Survey.objects.all()
+    # permission_classes = [IsAuthenticatedOrReadOnly]
+    # permission_classes = [IsAuthenticated]
+    authentication_classes = (TokenAuthentication,)
     serializer_class = SurveySerializer
 
+    def perform_create(self,serializer):
+        user= self.request.user
+        serializer.save(user)
 
-class SurveyLists(APIView):
-    def get(self,request):
-        user = User.objects.get(username = "second")
-        survey = Survey.objects.filter(user=user)
-        serializer = SurveySerializer(survey,many=True)
-        
-        return Response(serializer.data)
 
+
+    
 
 
 # class ProfileList(APIView):
@@ -65,18 +71,6 @@ class QuestionOne(APIView):
         serializer = QuestionsSerializer(question,many=False)
         return Response(serializer.data)
 
-@api_view(['GET','POST'])
-def profile(request):
-    if request.method == "GET":
-        profile = Profile.objects.all()
-        serializer = ProfileSerializers(profile,many=True)
-        return Response(serializer.data)
 
-@api_view(['GET','POST'])
-def index(request):
-    if request.method == "GET":
-        profile = Profile.objects.all()
-        serializer = ProfileSerializers(profile,many=True)
-        return HttpResponse("<p>Mjjj</p>")
 
 # Create your views here.

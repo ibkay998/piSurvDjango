@@ -2,7 +2,7 @@ from posixpath import basename
 from django.urls import path,include
 
 from . import views
-from .views import SurveyList,SurveyLists
+from .views import SurveyList,UserViewSet
 from rest_framework.routers import DefaultRouter
 
 
@@ -11,9 +11,8 @@ router = DefaultRouter()
 
 
 router.register('survey',SurveyList,basename="survey")
+router.register('users',UserViewSet)
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('surveys/',SurveyLists.as_view(),name='surveys'),
-    path('',include(router.urls)),
+    path('company/',include(router.urls)),
 ]

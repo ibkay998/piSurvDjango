@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Profile,Question,TestModel,Survey,Choice
+from .models import Profile,Question,TestModel,Survey,Choice,SubmittedQuestion
 from django.contrib.auth.models import User,auth
 from rest_framework.authtoken.views import Token
 
@@ -33,7 +33,7 @@ class SurveySerializer(serializers.ModelSerializer):
         fields = ["id","title","question_set"]
 
     def create(self, validated_data):
-        user = validated.pop("user",None)
+        user = validated_data.pop("user",None)
         question_set_data = validated_data.pop("question_set")
         survey  = Survey.objects.create(user=user,**validated_data)
 
@@ -56,4 +56,17 @@ class UserSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         Token.objects.create(user=user)
         return user
+
+class SubmittedQuestionSerializer(serializers.ModelSerializer):
+    survey = serializers.PrimaryKeyRelatedField(many=False, read_only =True)
+    survey = SurveySerializer(many = False)
+    class Meta:
+        model = SubmittedQuestion
+        fields = ["survey","answer"]
+
+    def create(self,validated_data):
+        user = validated_data.pop("user")
+        survey = validated_data.pop("survey")
+        submitted_data  = SubmittedQuestion.objects.create(user=user,survey=survey,**validated_data)
+        return submitted_data
     

@@ -7,7 +7,7 @@ import HistoryList from './historyData'
 
 function Dashboard() {
   return (
-    <div className=''>
+    <div className='overflow-hidden'>
         <NameCompnent />
         <SurveyComponent slides = {SurveyList}/>
         <HistoryComponent slides = {HistoryList}/>

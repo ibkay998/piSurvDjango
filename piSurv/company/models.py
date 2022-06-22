@@ -55,8 +55,8 @@ class Choice(models.Model):
         return f'{self.question.name_of_question}:{self.text}'
 
 class SubmittedQuestion(models.Model):
-    survey = models.ForeignKey(Survey,on_delete=models.PROTECT)
-    user = models.ForeignKey(ProfileUser,on_delete=models.PROTECT)
+    survey = models.ForeignKey(Survey,on_delete=models.PROTECT,related_name="survey")
+    user = models.ForeignKey(User,on_delete=models.PROTECT,related_name="individual")
     answer = models.ManyToManyField(Choice)
 
     def __str__(self):

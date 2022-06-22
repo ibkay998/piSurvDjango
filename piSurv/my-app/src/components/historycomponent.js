@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import HistoryBox from './historybox'
 import {FaArrowAltCircleRight,FaArrowAltCircleLeft} from 'react-icons/fa'
 
-function HistoryComponent({slides}) {
+function HistoryComponent(props) {
     const [current, setCurrent] = useState(0)
-    const length = slides.length
+    const length = props.slides.length
     const prevSlide = () =>{
         setCurrent(current === 0 ? length - 1: current-1 )
         
@@ -16,7 +16,7 @@ function HistoryComponent({slides}) {
 
     console.log(current)
 
-    if(!Array.isArray(slides) || slides.length <=0){
+    if(!Array.isArray(props.slides) || props.slides.length <=0){
         return null;
     }
     
@@ -28,9 +28,9 @@ function HistoryComponent({slides}) {
         <div className='md:hidden flex flex-row flex-nowrap justify-center max-w-md max-w-full w-[500px]  '>
 
         {
-            slides.map((item,index)=>(
+            props.slides.map((item,index)=>(
                 <div className={index === current ? 'duration-1000 opacity-1 scale-105':'duration-1000 opacity-0 ease-in'}>
-                    {index === current && (<HistoryBox key={index}/>)}
+                    {index === current && (<HistoryBox key={index} name={item.name} completed={item.completed}/>)}
                 </div>
                 
             ))

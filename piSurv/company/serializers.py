@@ -22,7 +22,16 @@ class ChoiceSerializer(serializers.ModelSerializer):
 class QuestionsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
-        fields = ["id","name_of_question"]
+        fields = ["id","name_of_question","choices","choices_array"]
+
+    def create(self, validated_data):
+        survey = validated_data.pop("survey",None)
+        choice = validated_data["choices"]
+        choice_list = choice["options"]
+        question = Question.objects.create(survey=survey,**validated_data)
+        for item in choice_list:
+            Choice.objects.create(question=question,text=item)
+        return question
 
 class SurveySerializer(serializers.ModelSerializer):
     question_set = serializers.PrimaryKeyRelatedField(many=True, read_only =True)

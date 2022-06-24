@@ -6,11 +6,13 @@ import Dashboard from './components/dashboard'
 function App() {
   return (
     <div className="w-full bg-white h-screen ">
-      <header className=" w-full h-full flex-col">
+      <header className=" w-full flex-col">
         <Header/>
-        <Dashboard/>
-        <div>Testing it </div>
       </header>
+      <div className = "h-full">
+        <Dashboard/>
+      </div>
+      
       
     </div>
   );

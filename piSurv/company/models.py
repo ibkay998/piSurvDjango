@@ -1,3 +1,4 @@
+from array import array
 from django.db import models
 from django.contrib.auth import get_user_model
 from datetime import datetime
@@ -43,13 +44,22 @@ class Question(models.Model):
     survey = models.ForeignKey(Survey,on_delete=models.CASCADE)
     name_of_question = models.CharField(max_length=200)
     pub_date = models.DateField('date published',default=timezone.now)
+    choices = models.JSONField(default=dict)
 
     def __str__(self):
         return self.name_of_question
 
+    @property
+    def choices_array(self):
+        self.choices["options"]
+            
+
+    
+
 class Choice(models.Model):
-    question = models.ForeignKey(Question,null=True,on_delete=models.CASCADE,)
+    question = models.ForeignKey(Question,on_delete=models.CASCADE,related_name="question")
     text = models.CharField(max_length=200)
+
 
     def __str__(self):
         return f'{self.question.name_of_question}:{self.text}'

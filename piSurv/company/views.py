@@ -35,9 +35,6 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 class SurveyList(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticatedOrReadOnly]
-    # permission_classes = [IsAuthenticated]
-    authentication_classes = (TokenAuthentication,)
     serializer_class = SurveySerializer
 
     def perform_create(self,serializer):
@@ -51,38 +48,17 @@ class SurveyList(viewsets.ModelViewSet):
 
 
 
-    
+class QuestionList(viewsets.ModelViewSet):
 
+    queryset = Question.objects.all()
+    serializer_class = QuestionsSerializer
 
-# class ProfileList(APIView):
-#     def get(self,request):
-#         profile = Profile.objects.all()
-#         serializer = ProfileSerializers(profile,many=True)
-#         return Response(serializer.data)
-        
-#     def post(self,request):
-#         serializer = ProfileSerializers(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data,status.HTTP_201_CREATED)
-#         else:
-#             return Response(serializer.errors,status.HTTP_400_BAD_REQUEST)
-
-class QuestionList(APIView):
-    def get(self,request):
-        question = Question.objects.all()
-        serializer = QuestionsSerializer(question,many=True)
-        
-        return Response(serializer.data)
+    def perform_create(self,serializer):
+        user = User.objects.get(username="test1")
+        survey = Survey.objects.get(user=user,title="test1")
+        serializer.save(survey=survey)
         
 
-    def post(self,request):
-        serializer = QuestionsSerializer(data = request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data,status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors,status.HTTP_400_BAD_REQUEST)
 
 class QuestionOne(APIView):
     def get(self,request,id):

@@ -1,8 +1,18 @@
 from posixpath import basename
-from django.urls import path,include
+from django.urls import path, include
 
 from . import views
-from .views import SurveyList,UserViewSet,SubmittedDataViewset,QuestionList
+from .views import (
+    AvailableSurveyList,
+    SurveyList,
+    UserViewSet,
+    SubmittedDataViewset,
+    QuestionList,
+    CompanySurveyList,
+    logout_view,
+    SurveyHistorySerializer,
+    HistoryList
+)
 from rest_framework.routers import DefaultRouter
 
 
@@ -10,14 +20,16 @@ from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 
 
-router.register('survey',SurveyList,basename="survey"),
-router.register('users',UserViewSet)
-router.register('submit',SubmittedDataViewset)
-router.register('question',QuestionList)
+router.register("survey", SurveyList, basename="survey"),
+router.register("register", UserViewSet)
+router.register("submit", SubmittedDataViewset)
+router.register("question", QuestionList)
+router.register("company-list",CompanySurveyList,basename="c-survey")
+router.register("available-survey", AvailableSurveyList, basename="a-survey")
+router.register("history", HistoryList, basename="a-history")
 
 
 urlpatterns = [
-
-    path('company/',include(router.urls)),
-    # path(''.include(router.urls))
+    path("company/", include(router.urls)),
+    path("company/logout/",logout_view,name="logout")
 ]

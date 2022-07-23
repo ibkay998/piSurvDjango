@@ -1,13 +1,24 @@
 import { useState } from "react"
+import { Outlet, Link } from "react-router-dom";
+import {useCookie, useCookies} from 'react-cookie'
+import ApiService from "../routes/ApiService";
 
 
 
 function Header(){
+    
+    
+    const Logout=()=>{
+        ApiService.LogoutUser()
+        console.log("you have been logged out")
+    }
+
     let Links =[
-        {name:"OVERVIEW",link:"/"},
-        {name:"SURVEYS",link:"/"},
-        {name:"HISTORY",link:"/"},
-        {name:"SETTINGS",link:"/"},
+        {name:"OVERVIEW",link:"overview"},
+        {name:"SURVEYS",link:"surveys"},
+        {name:"LOGOUT",link:"logout"},
+        
+        
     ] 
 
     let [open,setOpen] = useState(false)
@@ -29,11 +40,13 @@ function Header(){
                     {
                         Links.map((link)=>(
                             <li key={link.name} className="md:ml-8 text-xl md:my-0 my-7">
-                                <a href={link.link} className="text-gray-800 hover:text-gray-400 duration-500">{link.name}</a>
+                                <Link to={`/${link.link}`} className="text-gray-800 hover:text-gray-400 duration-500">{link.name}</Link>
                             </li>
                         ))
                     }
+                    <button onClick={Logout} >Logout</button>
                 </ul>
+                
                 
             </div>
 

@@ -1,7 +1,7 @@
 let SurveyList=[
-    {image:"",name:"Market Ownership Understanding of Complex market strategies",company:"cocacola",amount:"20"},
-    {image:"",name:"Market Ownership Understanding of Complex market strategies",company:"Apple",amount:"50"},
-    {image:"",name:"Market Ownership Understanding of Complex market strategies",company:"Samsung",amount:"60"},
+    {name:"Market Ownership Understanding of Complex market strategies",description:"cocacola",id:1},
+    {name:"Market Ownership Understanding of Complex market strategies",description:"Apple",id:1},
+    {name:"Market Ownership Understanding of Complex market strategies",description:"Samsung",id:1},
 ]
 
 export default SurveyList

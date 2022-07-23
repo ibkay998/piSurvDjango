@@ -1,4 +1,5 @@
 import React from 'react'
+import HistoryComponent from './historycomponent'
 
 function NameCompnent() {
     

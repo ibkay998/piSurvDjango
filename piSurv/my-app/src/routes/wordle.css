@@ -1,0 +1,11 @@
+.correct{
+    background: lightgreen;
+}
+
+.close{
+    background: orange;
+
+}
+.incorrect{
+    background: gray;
+}

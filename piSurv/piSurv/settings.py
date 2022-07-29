@@ -65,7 +65,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
     "http://localhost:3000",
-    "https://frontend-pisurv.herokuapp.com/",
+    "https://frontend-pisurv.herokuapp.com",
 ]
 
 ROOT_URLCONF = 'piSurv.urls'

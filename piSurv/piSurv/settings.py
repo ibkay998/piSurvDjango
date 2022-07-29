@@ -28,9 +28,9 @@ if os.path.isfile(dotenv_file):
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['pisurv.herokuapp.com',"127.0.0.1"]
 
 
 # Application definition
@@ -65,6 +65,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
     "http://localhost:3000",
+    "https://frontend-pisurv.herokuapp.com/",
 ]
 
 ROOT_URLCONF = 'piSurv.urls'

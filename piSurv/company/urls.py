@@ -11,7 +11,8 @@ from .views import (
     CompanySurveyList,
     logout_view,
     SurveyHistorySerializer,
-    HistoryList
+    HistoryList,
+    CompanyUserViewSet
 )
 from rest_framework.routers import DefaultRouter
 
@@ -22,6 +23,7 @@ router = DefaultRouter()
 
 router.register("survey", SurveyList, basename="survey"),
 router.register("register", UserViewSet)
+router.register("register-company",CompanyUserViewSet)
 router.register("submit", SubmittedDataViewset)
 router.register("question", QuestionList)
 router.register("company-list",CompanySurveyList,basename="c-survey")
